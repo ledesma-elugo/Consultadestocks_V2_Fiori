@@ -1,0 +1,82 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+	xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+	<edmx:DataServices m:DataServiceVersion="2.0">
+		<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZMM_CONSULTA_STOCK_SRV" xml:lang="es" sap:schema-version="1">
+			<EntityType Name="Stock" sap:content-version="1">
+				<Key><PropertyRef Name="MATERIAL"/><PropertyRef Name="Plant"/><PropertyRef Name="Warehouse"/></Key><Property Name="MATERIAL" Type="Edm.String" Nullable="false" MaxLength="18" sap:label="Material" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false"/><Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="4" sap:label="Centro" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false"/><Property Name="Warehouse" Type="Edm.String" Nullable="false" sap:label="Almacén" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false"/><Property Name="get_ind_lines" Type="Edm.String" Nullable="false" MaxLength="16" sap:label="Libre utiliz." sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="QUAL_INSPECTION" Type="Edm.String" Nullable="false" MaxLength="16" sap:label="Stock en control de calidad"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="BLKD_STKC" Type="Edm.String" Nullable="false" MaxLength="16" sap:label="Stock bloqueado" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="RESTR_USE" Type="Edm.String" Nullable="false" MaxLength="16" sap:label="Stock total de lotes (todos)" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="RESERVATIONS" Type="Edm.String" Nullable="false" MaxLength="16" sap:label="Reservas" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="RESTR_CONSI" Type="Edm.String" Nullable="false" MaxLength="16" sap:label="Stock consignado no libre" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="MEINS" Type="Edm.String" Nullable="false" MaxLength="15" sap:label="Unidad de medida del material" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/></EntityType>
+			<EntityType Name="Material" sap:content-version="1">
+				<Key><PropertyRef Name="Plant"/><PropertyRef Name="Warehouse"/></Key><Property Name="Material_H" Type="Edm.String" Nullable="false" MaxLength="18" sap:label="Material" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Descripcion" Type="Edm.String" Nullable="false" MaxLength="60" sap:label="Descripcion" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Plant" Type="Edm.String" Nullable="false" sap:label="Centro" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false"/><Property Name="Warehouse" Type="Edm.String" Nullable="false" sap:label="Almacén" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false"/></EntityType>
+			<EntityType Name="Warehouse" sap:content-version="1">
+				<Key><PropertyRef Name="Plant"/></Key><Property Name="Plant" Type="Edm.String" Nullable="false" sap:label="Centro" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false"/><Property Name="Wareh" Type="Edm.String" Nullable="false" sap:label="Almacén" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/><Property Name="Text" Type="Edm.String" Nullable="false" sap:label="Descripción breve" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/></EntityType>
+			<EntityType Name="Plant" sap:content-version="1">
+				<Key><PropertyRef Name="PlantP"/></Key><Property Name="PlantP" Type="Edm.String" Nullable="false" sap:label="Centro" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false"/><Property Name="Description" Type="Edm.String" Nullable="false" sap:label="Descripción breve" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/></EntityType>
+			<EntityType Name="Reservas" sap:content-version="1">
+				<Key><PropertyRef Name="Matnr"/><PropertyRef Name="Werks"/><PropertyRef Name="Lgort"/></Key><Property Name="Matnr" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/><Property Name="Werks" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/><Property Name="Lgort" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/><Property Name="NroReserva" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="FechaNec" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="CantidadNec" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="CantidadReduc" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="CantidadDif" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="ClaseMov" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="MovimMercPer" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="NroOrden" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/></EntityType>
+			<EntityType Name="Necesidades" sap:content-version="1">
+				<Key><PropertyRef Name="Matnr"/><PropertyRef Name="Werks"/><PropertyRef Name="Lgort"/></Key><Property Name="Matnr" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/><Property Name="Werks" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/><Property Name="Lgort" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/><Property Name="Fecha" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="ElemPlanif" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="DatosElemPlanif" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="FechaReprog" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="Excepcion" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="Entrada" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="Prioridad" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/></EntityType>
+			<EntityType Name="MovMercancias" sap:content-version="1">
+				<Key><PropertyRef Name="Matnr"/><PropertyRef Name="Werks"/><PropertyRef Name="Lgort"/></Key><Property Name="Matnr" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/><Property Name="Werks" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/><Property Name="Lgort" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"/><Property Name="ClaseMov" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="TextoClaseMov" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="Orden" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="CentroCoste" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="DocMaterial" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="FechaContab" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="Cantidad" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="UnidadEnt" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/><Property Name="Lote" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false"
+					sap:filterable="false"/></EntityType>
+			<EntityType Name="StockPorLote" sap:content-version="1">
+				<Key><PropertyRef Name="MATERIAL"/><PropertyRef Name="Plant"/><PropertyRef Name="Warehouse"/><PropertyRef Name="Charg"/></Key><Property Name="MATERIAL" Type="Edm.String" Nullable="false" MaxLength="18" sap:label="Material" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false"/><Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="4" sap:label="Centro" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false"/><Property Name="Warehouse" Type="Edm.String" Nullable="false" MaxLength="4" sap:label="Almacén" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false"/><Property Name="Charg" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Lote" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/><Property Name="FreeUse" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:label="Stock de libre utilziación"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="InTransfer" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:label="Stock en traslado" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="InQualityControl" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:label="Stock en control de calidad"
+					sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Locked" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:label="Stock bloqueado" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/></EntityType>
+			<EntityContainer Name="ZMM_CONSULTA_STOCK_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx"><EntitySet Name="StockSet" EntityType="ZMM_CONSULTA_STOCK_SRV.Stock" sap:creatable="false" sap:updatable="false" sap:deletable="false"
+				sap:content-version="1"/><EntitySet Name="MaterialSet" EntityType="ZMM_CONSULTA_STOCK_SRV.Material" sap:creatable="false" sap:updatable="false" sap:deletable="false"
+				sap:content-version="1"/><EntitySet Name="WarehouseSet" EntityType="ZMM_CONSULTA_STOCK_SRV.Warehouse" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/><EntitySet Name="PlantSet" EntityType="ZMM_CONSULTA_STOCK_SRV.Plant" sap:creatable="false" sap:updatable="false" sap:deletable="false"
+				sap:pageable="false" sap:addressable="false" sap:content-version="1"/><EntitySet Name="ReservasSet" EntityType="ZMM_CONSULTA_STOCK_SRV.Reservas" sap:creatable="false" sap:updatable="false" sap:deletable="false"
+				sap:pageable="false" sap:addressable="false" sap:content-version="1"/><EntitySet Name="NecesidadesSet" EntityType="ZMM_CONSULTA_STOCK_SRV.Necesidades" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/><EntitySet Name="MovMercanciasSet" EntityType="ZMM_CONSULTA_STOCK_SRV.MovMercancias" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/><EntitySet Name="StockPorLoteSet" EntityType="ZMM_CONSULTA_STOCK_SRV.StockPorLote" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:content-version="1"/></EntityContainer><atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="./sap/ZMM_CONSULTA_STOCK_SRV/$metadata"/><atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="./sap/ZMM_CONSULTA_STOCK_SRV/$metadata"/></Schema>
+	</edmx:DataServices>
+</edmx:Edmx>
