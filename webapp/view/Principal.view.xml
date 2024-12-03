@@ -1,0 +1,550 @@
+<mvc:View height="100%" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:t="sap.ui.table"
+	controllerName="ar.ledesma.fiori.mm.ui5consultarstockext.controller.Principal">
+	<Page id="desktop" showNavButton="false" title="{i18n>title}" class="sapUiContentPadding" showHeader="false" showSubHeader="false">
+		<content>
+			<HBox>
+				<items>
+					<SearchField id="searchFieldPlant" width="100%" placeholder="Buscar centro..." enableSuggestions="true" search="onSearchPlant"
+						suggest="onSuggestPlant"/>
+					<Input id="Material" type="Text" placeholder="Buscar material..." showSuggestion="false" showValueHelp="true"
+						valueHelpRequest="onHandleValueHelp"/>
+					<SearchField id="searchFieldWarehouse" width="100%" placeholder="Buscar almacén..." enableSuggestions="true" search="onSearchWarehouse"
+						suggest="onSuggestWarehouse"/>
+					<Button id="__boton1" text="Aplicar" press="onPress" type="Accept" icon="sap-icon://accept"/>
+				</items>
+			</HBox>
+			<t:Table visible="false" id="tablaStocks" rows="{/Stocks}" enableColumnFreeze="true" visibleRowCount="5" selectionMode="Single"
+				selectionBehavior="Row" rowSelectionChange="onLgortSelected">
+				<t:columns>
+					<t:Column id="column1">
+						<Label text="Almacén"/>
+						<t:template>
+							<Text text="{Almacen}"/>
+						</t:template>
+					</t:Column>
+					<t:Column id="column2">
+						<Label text="Stock de libre utilización"/>
+						<t:template>
+							<Text text="{StockLibre}"/>
+						</t:template>
+					</t:Column>
+					<t:Column id="column3">
+						<Label text="Stock en control de calidad"/>
+						<t:template>
+							<Text text="{StockCtrl}"/>
+						</t:template>
+					</t:Column>
+					<t:Column id="column4">
+						<Label text="Stock bloqueado"/>
+						<t:template>
+							<Text text="{StockBloqueado}"/>
+						</t:template>
+					</t:Column>
+					<t:Column id="column5">
+						<Label text="Stock total de lotes (todos)"/>
+						<t:template>
+							<Text text="{StockTotal}"/>
+						</t:template>
+					</t:Column>
+					<t:Column id="__column6">
+						<Label text="Reservas"/>
+						<t:template>
+							<Text text="{Reservas}"/>
+						</t:template>
+					</t:Column>
+					<t:Column id="__column7">
+						<Label text="Stock consignado no libre"/>
+						<t:template>
+							<Text text="{StockConsigNoLibre}"/>
+						</t:template>
+					</t:Column>
+					<t:Column id="__column8">
+						<Label text="Unidad de medida"/>
+						<t:template>
+							<Text text="{UM}"/>
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:Table>
+			<Panel id="panelReservas" class="panelStyle" expandable="true" expanded="false" headerText="Datos de reservas" width="auto">
+				<Table width="auto"
+					noDataText="(Haga clic o toque sobre un almacén de la lista superior. Si no la visualiza, ingrese los parámetros correspondientes en la selección.)"
+					id="tablaReservas" growing="true" growingThreshold="50" growingTriggerText="Ver mas" items="{modelReservas>/}">
+					<columns>
+						<Column>
+							<header>
+								<Label wrapping="false" text="Nº de reserva" id="__columnaReservas1"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" text="Fecha de nececesidad" id="__columnaReservas2"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" text="Cantidad necesaria" id="__columnaReservas3"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" text="Cantidades reducidas" id="__columnaReservas4"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" text="Cantidad diferencia" id="__columnaReservas5"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" text="Clase de movimiento" id="__columnaReservas6"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" text="Movimientos de mercancía permitidos para reserva" id="__columnaReservas7"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" text="Nº de orden" id="__columnaReservas8"/>
+							</header>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<cells>
+								<ObjectIdentifier text="{modelReservas>NroReserva}"/>
+								<ObjectIdentifier text="{modelReservas>FechaNec}"/>
+								<ObjectIdentifier text="{modelReservas>CantidadNec}"/>
+								<ObjectIdentifier text="{modelReservas>CantidadReduc}"/>
+								<ObjectIdentifier text="{modelReservas>CantidadDif}"/>
+								<ObjectIdentifier text="{modelReservas>ClaseMov}"/>
+								<ObjectIdentifier text="{modelReservas>MovimMercPer}"/>
+								<ObjectIdentifier text="{modelReservas>NroOrden}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Panel>
+			<Panel id="panelNecesidades" class="panelStyle" expandable="true" expanded="false" headerText="Datos de planific. de necesidades"
+				width="auto">
+				<Table width="auto"
+					noDataText="(Haga clic o toque sobre un almacén de la lista superior. Si no la visualiza, ingrese los parámetros correspondientes en la selección.)"
+					id="tablaNecesidades" growing="true" growingThreshold="50" growingTriggerText="{i18n>growing}" items="{modelNecesidades>/}">
+					<columns>
+						<Column>
+							<header>
+								<Label wrapping="false" id="__columnaNecesidades1" text="Fecha de la necesidad"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" id="__columnaNecesidades2" text="Elememento de planificación"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" id="__columnaNecesidades3" text="Datos elemento planific. de nec."/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" id="__columnaNecesidades4" text="Fecha de reprogamación"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" id="__columnaNecesidades5" text="Excepción"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" id="__columnaNecesidades6" text="Entrada"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" id="__columnaNecesidades7" text="Prioridad de la necesidad"/>
+							</header>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<cells>
+								<ObjectIdentifier text="{modelNecesidades>Fecha}"/>
+								<ObjectIdentifier text="{modelNecesidades>ElemPlanif}"/>
+								<ObjectIdentifier text="{modelNecesidades>DatosElemPlanif}"/>
+								<ObjectIdentifier text="{modelNecesidades>FechaReprog}"/>
+								<ObjectIdentifier text="{modelNecesidades>Excepcion}"/>
+								<ObjectIdentifier text="{modelNecesidades>Entrada}"/>
+								<ObjectIdentifier text="{modelNecesidades>Prioridad}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Panel>
+			<Panel id="panelMercancias" class="panelStyle" expandable="true" expanded="false" headerText="Datos de movimientos de mercancías"
+				width="auto">
+				<Table width="auto"
+					noDataText="(Haga clic o toque sobre un almacén de la lista superior. Si no la visualiza, ingrese los parámetros correspondientes en la selección.)"
+					id="tablaMercancias" growing="true" growingThreshold="50" growingTriggerText="{i18n>growing}" items="{modelMercancias>/}">
+					<columns>
+						<Column>
+							<header>
+								<Label wrapping="false" id="__columnaMercancias1" text="Clase de movimiento"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" id="__columnaMercancias2" text="Texto de la clase de movimiento"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" id="__columnaMercancias3" text="Número de orden"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" id="__columnaMercancias4" text="Centro de Coste"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" id="__columnaMercancias5" text="Documento de material"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" id="__columnaMercancias6" text="Fecha de contabilización"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" id="__columnaMercancias7" text="Cantidad (en unid. med. de entrada)"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" id="__columnaMercancias8" text="Unid. med. de entrada"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" id="__columnaMercancias9" text="Lote"/>
+							</header>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<cells>
+								<ObjectIdentifier text="{modelMercancias>ClaseMov}"/>
+								<ObjectIdentifier text="{modelMercancias>TextoClaseMov}"/>
+								<ObjectIdentifier text="{modelMercancias>Orden}"/>
+								<ObjectIdentifier text="{modelMercancias>CentroCoste}"/>
+								<ObjectIdentifier text="{modelMercancias>DocMaterial}"/>
+								<ObjectIdentifier text="{modelMercancias>FechaContab}"/>
+								<ObjectIdentifier text="{modelMercancias>Cantidad}"/>
+								<ObjectIdentifier text="{modelMercancias>UnidadEnt}"/>
+								<ObjectIdentifier text="{modelMercancias>Lote}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Panel>
+			<Panel id="panelStock" class="panelStyle" expandable="true" expanded="false" headerText="Datos de stock de mercancías"
+				width="auto">
+				<Table width="auto"
+					noDataText="(Haga clic o toque sobre un almacén de la lista superior. Si no la visualiza, ingrese los parámetros correspondientes en la selección.)"
+					id="tablaStock" growing="true" growingThreshold="50" growingTriggerText="Ver mas" items="{modelStock>/}">
+					<columns>
+						<Column>
+							<header>
+								<Label wrapping="false" id="__columnaStock1" text="Lote"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" id="__columnaStock2" text="Stock libre utilización"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" id="__columnaStock3" text="Stock en Traslado"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" id="__columnaStock4" text="Stock en control de calidad"/>
+							</header>
+						</Column>
+						<Column>
+							<header>
+								<Label wrapping="false" id="__columnaStock5" text="Stock bloqueado"/>
+							</header>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<cells>
+								<ObjectIdentifier text="{modelStock>Charg}"/>
+								<ObjectIdentifier text="{modelStock>FreeUse}"/>
+								<ObjectIdentifier text="{modelStock>InTransfer}"/>
+								<ObjectIdentifier text="{modelStock>InQualityControl}"/>
+								<ObjectIdentifier text="{modelStock>Locked}"/>
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</Panel>
+		</content>
+	</Page>
+	<Page id="mobile" showNavButton="false" title="{i18n>title}" class="sapUiContentPadding" showHeader="false" showSubHeader="false">
+		<content>
+			<html:style>
+				.small{ font-size: 10px !important; } .smallbold{ font-weight: bold; font-size: 10px !important; }
+			</html:style>
+			<VBox>
+				<items>
+					<SearchField id="searchFieldPlantM" width="100%" placeholder="Buscar centro..." enableSuggestions="true" search="onSearchPlantM"
+						suggest="onSuggestPlantM"/>
+					<Input id="MaterialM" type="Text" placeholder="Buscar material..." showSuggestion="false" showValueHelp="true"
+						valueHelpRequest="onHandleValueHelp"/>
+					<SearchField id="searchFieldWarehouseM" width="100%" placeholder="Buscar almacén..." enableSuggestions="true" search="onSearchWarehouseM"
+						suggest="onSuggestWarehouseM"/>
+					<Button id="__boton1M" text="Aplicar" press="onPressM" type="Accept" icon="sap-icon://accept"/>
+				</items>
+			</VBox>
+			<t:Table visible="false" id="tablaStocksM" rows="{/Stocks}" enableColumnFreeze="true" visibleRowCount="3" selectionMode="Single"
+				selectionBehavior="Row" rowSelectionChange="onLgortSelectedM" rowHeight="13">
+				<t:columns>
+					<t:Column id="column1M">
+						<Label text="Almacén" id="__label0M"/>
+						<t:template>
+							<FormattedText  class="small" htmlText="{Almacen}"/>
+						</t:template>
+					</t:Column>
+					<t:Column id="column2M">
+						<Label text="Stock de libre utilización" id="__label1M"/>
+						<t:template>
+							<FormattedText class="small" htmlText="{StockLibre}"/>
+						</t:template>
+					</t:Column>
+					<t:Column id="column3M">
+						<Label text="Stock en control de calidad" id="__label2M"/>
+						<t:template>
+							<FormattedText  class="small" htmlText="{StockCtrl}"/>
+						</t:template>
+					</t:Column>
+					<t:Column id="column4M">
+						<Label text="Stock bloqueado" id="__label3M"/>
+						<t:template>
+							<FormattedText class="small" htmlText="{StockBloqueado}"/>
+						</t:template>
+					</t:Column>
+					<t:Column id="column5M">
+						<Label text="Stock total de lotes (todos)" id="__label4M"/>
+						<t:template>
+							<FormattedText  class="small" htmlText="{StockTotal}"/>
+						</t:template>
+					</t:Column>
+					<t:Column id="__column6M">
+						<Label text="Reservas" id="__label5M"/>
+						<t:template>
+							<FormattedText class="small" htmlText="{Reservas}"/>
+						</t:template>
+					</t:Column>
+					<t:Column id="__column7M">
+						<Label text="Stock consignado no libre" id="__label6M"/>
+						<t:template>
+							<FormattedText class="small" htmlText="{StockConsigNoLibre}"/>
+						</t:template>
+					</t:Column>
+					<t:Column id="__column8M">
+						<Label text="Unidad de medida" id="__label7M"/>
+						<t:template>
+							<FormattedText class="small" htmlText="{UM}"/>
+						</t:template>
+					</t:Column>
+				</t:columns>
+			</t:Table>
+			<Carousel activePage="__page0" id="__carousel0" height="340px">
+				<pages>
+					<Page title="Reservas" id="__page0" showFooter="false" showHeader="true">
+						<content>
+							<t:Table id="tablaReservasM" columnHeaderHeight="5" rowHeight="8" rows="{/Reservas}" enableColumnFreeze="true" visibleRowCount="4"
+								selectionMode="None">
+								<t:columns>
+									<t:Column>
+										<Label text="Nº de reserva" id="__columnaReservasM1"/>
+										<t:template>
+											<FormattedText class="small" htmlText="{NroReserva}"/>
+										</t:template>
+									</t:Column>
+									<t:Column>
+										<Label text="Fecha de la necesidad" id="__columnaReservasM2"/>
+										<t:template>
+											<FormattedText class="small" htmlText="{FecNeces}"/>
+										</t:template>
+									</t:Column>
+									<t:Column>
+										<Label text="Clase de movimiento" id="__columnaReservasM6"/>
+										<t:template>
+											<FormattedText class="small" htmlText="{ClasMov}"/>
+										</t:template>
+									</t:Column>
+									<t:Column>
+										<Label text="Cantidad necesaria" id="__columnaReservasM3"/>
+										<t:template>
+											<FormattedText class="small" htmlText="{CantNeces}"/>
+										</t:template>
+									</t:Column>
+									<t:Column>
+										<Label text="Cant. reducidas" id="__columnaReservasM4"/>
+										<t:template>
+											<FormattedText class="small" htmlText="{CantReduc}"/>
+										</t:template>
+									</t:Column>
+									<t:Column>
+										<Label text="Cant. diferencia" id="__columnaReservasM5"/>
+										<t:template>
+											<FormattedText class="small" htmlText="{CantDif}"/>
+										</t:template>
+									</t:Column>
+									<t:Column>
+										<Label wrapping="false" text="Mov. mercanc. permit. res." id="__columnaReservasM7"/>
+										<t:template>
+											<FormattedText class="small" htmlText="{MovMercPerm}"/>
+										</t:template>
+									</t:Column>
+									<t:Column>
+										<Label wrapping="false" text="Nº de orden" id="__columnaReservasM8"/>
+										<t:template>
+											<FormattedText class="small" htmlText="{NroOrden}"/>
+										</t:template>
+									</t:Column>
+								</t:columns>
+							</t:Table>
+						</content>
+					</Page>
+					<Page title="Necesidades" id="__page1" showFooter="false" showHeader="true">
+						<content>
+							<t:Table id="tablaNecesidadesM" columnHeaderHeight="5" rowHeight="8" rows="{/Necesidades}" enableColumnFreeze="true" visibleRowCount="4"
+								selectionMode="None">
+								<t:columns>
+									<t:Column>
+										<Label  text="Fecha de necesidad" id="__columnaNecesidadesM1"/>
+										<t:template>
+											<FormattedText class="small" htmlText="{Fecha}"/>
+										</t:template>
+									</t:Column>
+									<t:Column>
+										<Label id="__columnaNecesidadesM2" text="Elem. planific. nec."/>
+										<t:template>
+											<FormattedText class="small" htmlText="{ElemPlanif}"/>
+										</t:template>
+									</t:Column>
+									<t:Column>
+										<Label wrapping="false" id="__columnaNecesidadesM3" text="Datos elem. pl. nec."/>
+										<t:template>
+											<FormattedText class="small" htmlText="{DatosElemPlanif}"/>
+										</t:template>
+									</t:Column>
+									<t:Column>
+										<Label wrapping="false" id="__columnaNecesidadesM4" text="Fecha repr."/>
+										<t:template>
+											<FormattedText class="small" htmlText="{FechaReprog}"/>
+										</t:template>
+									</t:Column>
+									<t:Column>
+										<Label wrapping="false" id="__columnaNecesidadesM5" text="Excepción"/>
+										<t:template>
+											<FormattedText class="small" htmlText="{Excepcion}"/>
+										</t:template>
+									</t:Column>
+									<t:Column>
+										<Label wrapping="false" id="__columnaNecesidadesM6" text="Entrada"/>
+										<t:template>
+											<FormattedText class="small" htmlText="{Entrada}"/>
+										</t:template>
+									</t:Column>
+									<t:Column>
+										<Label id="__columnaNecesidadesM7" text="Prioridad"/>
+										<t:template>
+											<FormattedText class="small" htmlText="{Prioridad}"/>
+										</t:template>
+									</t:Column>
+								</t:columns>
+							</t:Table>
+						</content>
+					</Page>
+					<Page title="Mercancias" id="__page4" showFooter="false" showHeader="true">
+						<content>
+							<t:Table id="tablaMercanciasM" columnHeaderHeight="5" rowHeight="8" rows="{/Stock}" enableColumnFreeze="true" visibleRowCount="4"
+								selectionMode="None">
+								<t:columns>
+									<t:Column>
+										<Label text="Clase Mov. Mercancías" id="__columnaMercanciasM1"/>
+										<t:template>
+											<FormattedText class="small" htmlText="{ClaseMov}"/>
+										</t:template>
+									</t:Column>
+									<t:Column>
+										<Label id="__columnaMercanciasM2" text="Texto clase de mov."/>
+										<t:template>
+											<FormattedText class="small" htmlText="{TextoClaseMov}"/>
+										</t:template>
+									</t:Column>
+									<t:Column>
+										<Label id="__columnaMercanciasM3" text="Nº orden"/>
+										<t:template>
+											<FormattedText class="small" htmlText="{Orden}"/>
+										</t:template>
+									</t:Column>
+									<t:Column>
+										<Label id="__columnaMercanciasM4" text="Centro de Coste"/>
+										<t:template>
+											<FormattedText class="small" htmlText="{CentroCoste}"/>
+										</t:template>
+									</t:Column>
+									<t:Column>
+										<Label id="__columnaMercanciasM5" text="Doc. material"/>
+										<t:template>
+											<FormattedText class="small" htmlText="{DocMaterial}"/>
+										</t:template>
+									</t:Column>
+									<t:Column>
+										<Label id="__columnaMercanciasM6" text="Fec. contab."/>
+										<t:template>
+											<FormattedText class="small" htmlText="{FechaContab}"/>
+										</t:template>
+									</t:Column>
+									<t:Column>
+										<Label id="__columnaMercanciasM7" text="Cant. (UME)"/>
+										<t:template>
+											<FormattedText class="small" htmlText="{Cantidad}"/>
+										</t:template>
+									</t:Column>
+									<t:Column>
+										<Label id="__columnaMercanciasM8" text="UME"/>
+										<t:template>
+											<FormattedText class="small" htmlText="{CantidadEnt}"/>
+										</t:template>
+									</t:Column>
+									<t:Column>
+										<Label id="__columnaMercanciasM9" text="Lote"/>
+										<t:template>
+											<FormattedText class="small" htmlText="{Lote}"/>
+										</t:template>
+									</t:Column>
+								</t:columns>
+							</t:Table>
+						</content>
+					</Page>
+				</pages>
+			</Carousel>
+		</content>
+	</Page>
+</mvc:View>

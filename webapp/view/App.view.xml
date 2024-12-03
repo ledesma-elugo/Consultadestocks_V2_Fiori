@@ -1,0 +1,9 @@
+<mvc:View controllerName="ar.ledesma.fiori.mm.ui5consultarstockext.controller.App" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+	<Shell id="shell">
+		<App id="app">
+			<pages>
+				<mvc:XMLView viewName="ar.ledesma.fiori.mm.ui5consultarstockext.view.Principal"></mvc:XMLView>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>
